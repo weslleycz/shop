@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id         String     @id @default(uuid())
+    name       String
+    email      String     @unique
+    password   String
+    birth_date String
+    CPF        String     @unique
+    avatar     String?
+    Addresses  Json[]
+    phone      String
+    purchase   Purchase[]
+
+    @@map("Users")
+}
+
+model Purchase {
+    id               String       @id @unique @default(uuid())
+    date             DateTime     @default(now())
+    status           String       @default("Preparando o Pedido")
+    delivered        Boolean      @default(false)
+    delivery_address Json
+    phone            String
+    total            Float
+    userId           String
+    cooperativeId    String
+    Products         Json[]
+    User             User         @relation(fields: [userId], references: [id])
+    Cooperative      Cooperative? @relation(fields: [cooperativeId], references: [id])
+
+    @@map("Purchases")
+}
+
+model Product {
+    id          String   @id @unique @default(uuid())
+    name        String
+    quantity    Int
+    price       Float
+    discount    Int
+    description String
+    photograph  String[]
+    type        String
+    code_bar    String?
+
+    Cooperative   Cooperative? @relation(fields: [cooperativeId], references: [id])
+    cooperativeId String?
+
+    @@map("Products")
+}
+
+model Cooperative {
+    id            String     @id @default(uuid())
+    CNPJ_number   String     @unique
+    name          String
+    Addresses     Json[]
+    products      Product[]
+    purchase      Purchase[]
+    email         String     @unique
+    password      String
+    surrender     Int
+    minimum_value Float
+
+    @@map("Cooperatives")
+}
