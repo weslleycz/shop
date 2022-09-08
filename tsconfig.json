@@ -5,7 +5,7 @@
       "strict": true,
       "lib": ["esnext"],
       "resolveJsonModule": true,
-      "module": "commonjs",
+      "module": "CommonJS",
       "target": "es2017",
       "forceConsistentCasingInFileNames": true,
       "allowJs": true,

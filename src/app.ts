@@ -2,6 +2,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
+import { router } from "./routes";
 
 dotenv.config();
 
@@ -19,6 +20,8 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json({ limit: "200mb" }));
+
+app.use(router);
 
 app.listen(process.env.PORT, () => {
     console.log(`🚀 Server started on port:${process.env.PORT}`);
