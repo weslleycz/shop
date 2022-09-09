@@ -1,11 +1,12 @@
-import { prismaClient } from "../utils/prismaClient";
 import { color } from "console-log-colors";
 import { Request, Response } from "express";
-import { crypyPassword } from "../utils/crypyPassword";
+import { Login, User } from "../types/user";
+import { crypyPassword } from "../utils/crypy";
 import { loginJWT } from "../utils/jwt";
-import { User } from "../types/user";
+import { matchKey } from "../utils/match";
+import { prismaClient } from "../utils/prismaClient";
 
-const { bgGreen, bgMagenta, bgRed, bgYellow, bgCyan } = color;
+const { bgGreen, bgRed, bgYellow, bgCyan, bgBlue } = color;
 
 const createUser = async (req: Request, res: Response) => {
     try {
@@ -14,19 +15,49 @@ const createUser = async (req: Request, res: Response) => {
         );
         console.log(bgCyan(req.method));
         const data = await prismaClient.user.create({
-            data:{
+            data: {
                 name: name,
                 email: email,
-                CPF:CPF,
+                CPF: CPF,
                 birth_date: birth_date,
                 password: crypyPassword(password),
                 phone: phone,
-            }
-        })
+            },
+        });
         return res.status(200).json({ status: "create", has_error: false });
     } catch (error) {
         return res.status(400).json({ data: error, has_error: true });
     }
 };
 
-export { createUser };
+const loginUser = async (req: Request, res: Response) => {
+    try {
+        console.log(bgCyan(req.method));
+        const { email, password } = <Login>req.body;
+        const data = await prismaClient.user.findUnique({
+            where: {
+                email,
+            },
+            select: {
+                id: true,
+                password: true,
+            },
+        });
+
+        if (data?.password != undefined) {
+            if (matchKey(password, data?.password)) {
+                return res
+                    .status(200)
+                    .json({ token: loginJWT(data.id), has_error: false });
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ data: "Usuário não cadastrado", has_error: true });
+        }
+    } catch (error) {
+        return res.status(400).json({ data: error, has_error: true });
+    }
+};
+
+export { createUser, loginUser };

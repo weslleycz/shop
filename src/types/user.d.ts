@@ -7,3 +7,8 @@ export type User = {
     phone: "string";
     avatar?: "string";
 };
+
+export type Login = {
+    email: "string";
+    password: "string";
+};
