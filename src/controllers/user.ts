@@ -43,17 +43,20 @@ const loginUser = async (req: Request, res: Response) => {
                 password: true,
             },
         });
-
         if (data?.password != undefined) {
             if (matchKey(password, data?.password)) {
                 return res
                     .status(200)
                     .json({ token: loginJWT(data.id), has_error: false });
+            } else {
+                return res
+                    .status(400)
+                    .json({ data: "Senha incorreta!", has_error: true });
             }
         } else {
             return res
                 .status(400)
-                .json({ data: "Usuário não cadastrado", has_error: true });
+                .json({ data: "Usuário não cadastrado!", has_error: true });
         }
     } catch (error) {
         return res.status(400).json({ data: error, has_error: true });
