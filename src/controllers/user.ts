@@ -10,7 +10,7 @@ const { bgGreen, bgRed, bgYellow, bgCyan, bgBlue } = color;
 
 const createUser = async (req: Request, res: Response) => {
     try {
-        const { CPF, birth_date, email, password, name, phone } = <User>(
+        const { CPF, email, password, name, phone } = <User>(
             req.body
         );
         console.log(bgCyan(req.method));
@@ -19,7 +19,6 @@ const createUser = async (req: Request, res: Response) => {
                 name: name,
                 email: email,
                 CPF: CPF,
-                birth_date: birth_date,
                 password: crypyPassword(password),
                 phone: phone,
             },
