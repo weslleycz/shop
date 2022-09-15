@@ -11,35 +11,35 @@ datasource db {
 }
 
 model User {
-    id         String     @id @default(uuid())
-    name       String
-    email      String     @unique
-    password   String
-    CPF        String     @unique
-    avatar     String?
-    phone      String
-    purchase   Purchase[]
+    id       String     @id @default(uuid())
+    name     String
+    email    String     @unique
+    password String
+    CPF      String     @unique
+    avatar   String?
+    phone    String
+    purchase Purchase[]
 
     @@map("Users")
 }
 
 model Purchase {
-    id               String       @id @unique @default(uuid())
-    date             DateTime     @default(now())
-    status           String       @default("Preparando o Pedido")
-    delivered        Boolean      @default(false)
-    phone            String
-    total            Float
-    userId           String
-    cooperativeId    String
-    User             User         @relation(fields: [userId], references: [id])
-    Cooperative      Cooperative? @relation(fields: [cooperativeId], references: [id])
+    id            String   @id @unique @default(uuid())
+    date          DateTime @default(now())
+    status        String   @default("Preparando o Pedido")
+    delivered     Boolean  @default(false)
+    phone         String
+    total         Float
+    userId        String
+    cooperativeId String
+    User          User     @relation(fields: [userId], references: [id])
+    Cooperative   Company? @relation(fields: [cooperativeId], references: [id])
 
     @@map("Purchases")
 }
 
 model Product {
-    id          String   @id @unique @default(uuid())
+    id          String  @id @unique @default(uuid())
     name        String
     quantity    Int
     price       Float
@@ -48,22 +48,35 @@ model Product {
     type        String
     code_bar    String?
 
-    Cooperative   Cooperative? @relation(fields: [cooperativeId], references: [id])
+    Cooperative   Company? @relation(fields: [cooperativeId], references: [id])
     cooperativeId String?
 
     @@map("Products")
 }
 
-model Cooperative {
-    id            String     @id @default(uuid())
-    CNPJ_number   String     @unique
-    name          String
-    products      Product[]
-    purchase      Purchase[]
-    email         String     @unique
-    password      String
-    surrender     Int
-    minimum_value Float
+model Company {
+    id        String     @id @default(uuid())
+    CNPJ      String     @unique
+    name      String
+    products  Product[]
+    purchase  Purchase[]
+    email     String     @unique
+    password  String
+    phone     String
+    address   Address    @relation(fields: [addressId], references: [id])
+    addressId String
 
-    @@map("Cooperatives")
+    @@map("Companys")
+}
+
+model Address {
+    id        String    @id @default(uuid())
+    number    String
+    street    String
+    city      String
+    latitude  String
+    longitude String
+    Company   Company[]
+
+    @@map("Addresses")
 }

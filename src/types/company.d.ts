@@ -1,14 +1,14 @@
-export type User = {
+import { Address } from "./address";
+export type Company = {
+    CNPJ: "string";
     name: "string";
     email: "string";
     password: "string";
-    CPF: "string";
     phone: "string";
-    avatar?: "string";
+    address: Address;
 };
 
 export type Login = {
     email: "string";
     password: "string";
 };
-
