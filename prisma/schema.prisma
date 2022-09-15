@@ -47,7 +47,6 @@ model Product {
     description String
     type        String
     code_bar    String?
-
     Cooperative   Company? @relation(fields: [cooperativeId], references: [id])
     cooperativeId String?
 

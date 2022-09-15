@@ -10,10 +10,19 @@ const { bgGreen, bgRed, bgYellow, bgCyan, bgBlue } = color;
 
 const createUser = async (req: Request, res: Response) => {
     console.log(bgCyan(req.method));
+    /*  #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'Some description...',
+                schema: {
+                    name: "Jhon Doe",
+                    email: "jhon@gmail.com",
+                    CPF:"346.310.260-90",
+                    password:"hamburguer",
+                    phone:"(43) 2902-7515"
+                }
+        } */
     try {
-        const { CPF, email, password, name, phone } = <User>(
-            req.body
-        );
+        const { CPF, email, password, name, phone } = <User>req.body;
         const data = await prismaClient.user.create({
             data: {
                 name: name,
@@ -32,6 +41,14 @@ const createUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
     console.log(bgCyan(req.method));
     try {
+        /*  #swagger.parameters['obj'] = {
+                in: 'body',
+                description: 'Some description...',
+                schema: {
+                    email: "jhon@gmail.com",
+                    password:"hamburguer",
+                }
+        } */
         const { email, password } = <Login>req.body;
         const data = await prismaClient.user.findUnique({
             where: {

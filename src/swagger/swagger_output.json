@@ -14,7 +14,118 @@
     "/user/signup": {
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Jhon Doe"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "jhon@gmail.com"
+                },
+                "CPF": {
+                  "type": "string",
+                  "example": "346.310.260-90"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "hamburguer"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "(43) 2902-7515"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "jhon@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "hamburguer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/company/signup": {
+      "post": {
+        "description": "",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/company/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "valeriidark@kumpulanmedia.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "negocios"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

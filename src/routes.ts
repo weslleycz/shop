@@ -1,6 +1,6 @@
 import { Router } from "express";
+import { createCompany, loginCompany } from "./controllers/company";
 import { createUser, loginUser } from "./controllers/user";
-import { createCompany,loginCompany } from "./controllers/company";
 
 const router = Router();
 
