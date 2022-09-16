@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import { router } from "./routes";
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger/swagger_output.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger/swagger_output.json");
 
 dotenv.config();
 
@@ -25,7 +25,7 @@ app.use(express.json({ limit: "200mb" }));
 
 app.use(router);
 
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(process.env.PORT, () => {
     console.log(`🚀 Server started on port:${process.env.PORT}`);
