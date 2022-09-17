@@ -2,7 +2,7 @@ import { color } from "console-log-colors";
 import { Request, Response } from "express";
 import { PythonShell } from "python-shell";
 import { uuid } from "uuidv4";
-import { Login, User } from "../types/user";
+import { Login, PasswordUser, User } from "../types/user";
 import { crypyPassword } from "../utils/crypy";
 import { loginJWT } from "../utils/jwt";
 import { matchKey } from "../utils/match";
@@ -15,7 +15,7 @@ const createUser = async (req: Request, res: Response) => {
     console.log(bgCyan(req.method));
     /*  #swagger.parameters['obj'] = {
                 in: 'body',
-                description: 'Some description...',
+                description: '',
                 schema: {
                     name: "Jhon Doe",
                     email: "jhon@gmail.com",
@@ -46,7 +46,7 @@ const loginUser = async (req: Request, res: Response) => {
     try {
         /*  #swagger.parameters['obj'] = {
                 in: 'body',
-                description: 'Some description...',
+                description: '',
                 schema: {
                     email: "jhon@gmail.com",
                     password:"hamburguer",
@@ -127,4 +127,44 @@ const recoveryCodeUser = async (req: Request, res: Response) => {
     }
 };
 
-export { createUser, loginUser, recoveryCodeUser };
+const updatePasswordUser = async (req: Request, res: Response) => {
+    console.log(bgYellow(req.method));
+            /*  #swagger.parameters['obj'] = {
+                in: 'body',
+                description: '',
+                schema: {
+                    code: "código que chegou no email",
+                    password:"12345"
+                }
+        } */
+    try {
+        const { code, password } = <PasswordUser>req.body;
+        await Redis.connect();
+        const id = await Redis.get(code);
+        if (id !== null) {
+            console.log(JSON.parse(id));
+            const data = await prismaClient.user.update({
+                where:{
+                    id:JSON.parse(id)
+                },
+                data:{
+                    password:crypyPassword(password)
+                }
+            });
+            console.log(data);
+            await Redis.disconnect();
+            return res.status(200).json({ status: "update", has_error: false });
+        } else {
+            await Redis.disconnect();
+            return res.status(400).json({
+                data: "Código informado não e valido.",
+                has_error: true,
+            });
+        }
+    } catch (error) {
+        await Redis.disconnect();
+        return res.status(400).json({ data: error, has_error: true });
+    }
+};
+
+export { createUser, loginUser, recoveryCodeUser, updatePasswordUser };

@@ -11,3 +11,8 @@ export type Login = {
     email: "string";
     password: "string";
 };
+
+export type PasswordUser={
+    code: "string";
+    password: "string";
+}

@@ -18,7 +18,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Some description...",
+            "description": "",
             "schema": {
               "type": "object",
               "properties": {
@@ -63,7 +63,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Some description...",
+            "description": "",
             "schema": {
               "type": "object",
               "properties": {
@@ -98,6 +98,39 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/updatePasswor": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "código que chegou no email"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345"
+                }
+              }
+            }
           }
         ],
         "responses": {

@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { createCompany, loginCompany } from "./controllers/company";
-import { createUser, loginUser, recoveryCodeUser } from "./controllers/user";
+import {
+    createUser,
+    loginUser,
+    recoveryCodeUser,
+    updatePasswordUser,
+} from "./controllers/user";
 
 const router = Router();
 
@@ -8,6 +13,7 @@ const router = Router();
 router.post("/user/signup", createUser);
 router.post("/user/login", loginUser);
 router.get("/user/recovery/:email", recoveryCodeUser);
+router.put("/user/updatePasswor", updatePasswordUser);
 
 //Company
 router.post("/company/signup", createCompany);
