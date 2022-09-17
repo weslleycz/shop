@@ -11,5 +11,6 @@
         "allowJs": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
+        "jsx": "react",
     }
 }

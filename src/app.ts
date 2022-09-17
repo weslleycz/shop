@@ -1,8 +1,11 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
+import { setupReactViews } from "express-tsx-views";
 import helmet from "helmet";
+import { resolve } from "path";
 import { router } from "./routes";
+import { Props } from "./views/about";
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger/swagger_output.json");
 
@@ -19,6 +22,16 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
     app.use(cors());
     next();
+});
+
+setupReactViews(app, {
+    viewsDirectory: resolve(__dirname, "views"),
+    prettify: true,
+});
+
+app.get("/", (req, res, next) => {
+    const data: Props = { title: "About" };
+    res.render("about", data);
 });
 
 app.use(express.json({ limit: "200mb" }));
