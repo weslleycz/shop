@@ -7,6 +7,7 @@ import { crypyPassword } from "../utils/crypy";
 import { loginJWT } from "../utils/jwt";
 import { matchKey } from "../utils/match";
 import { prismaClient } from "../utils/prismaClient";
+import { Redis } from "../utils/redis";
 
 const { bgGreen, bgRed, bgYellow, bgCyan, bgMagenta } = color;
 
@@ -92,16 +93,23 @@ const recoveryCodeUser = async (req: Request, res: Response) => {
         });
         if (data != null) {
             try {
-                const shell = new PythonShell("./src/utils/sendmail.py", { mode: "text" });
+                const code = uuid().slice(-8);
+                await Redis.connect();
+                const shell = new PythonShell("./src/utils/sendmail.py", {
+                    mode: "text",
+                });
                 shell.send(
                     JSON.stringify(`${process.env.EMAIL}, ${process.env.PASSWORD},
-            ${data.email} ,${uuid().slice(-8)}
+            ${data.email} ,${code}
             `)
                 );
                 shell.on("message", function (message) {
                     console.log(message);
                 });
-                console.log("finished");
+                await Redis.set(code, JSON.stringify(data.id), {
+                    EX: 3600,
+                });
+                await Redis.disconnect();
                 return res
                     .status(200)
                     .json({ status: "Código enviado", has_error: false });

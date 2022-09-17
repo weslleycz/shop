@@ -7,8 +7,6 @@ import sys, json
 
 data=json.loads(sys.stdin.readline())
 
-#print(data.split(",")[3])
-
 sender_email = data.split(",")[0]
 receiver_email = data.split(",")[2][13:]
 password = data.split(",")[1]
