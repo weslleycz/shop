@@ -6,6 +6,7 @@ import helmet from "helmet";
 import { resolve } from "path";
 import { router } from "./routes";
 import { Props } from "./views/about";
+import { PropsRecovery } from "./views/recovery";
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger/swagger_output.json");
 
@@ -32,6 +33,11 @@ setupReactViews(app, {
 app.get("/", (req, res, next) => {
     const data: Props = { title: "About" };
     res.render("about", data);
+});
+
+app.get("/recovery", (req, res, next) => {
+    const data: PropsRecovery = { title: "About" };
+    res.render("recovery", data);
 });
 
 app.use(express.json({ limit: "200mb" }));
