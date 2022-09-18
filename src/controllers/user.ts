@@ -114,7 +114,6 @@ const recoveryCodeUser = async (req: Request, res: Response) => {
                     .status(200)
                     .json({ status: "Código enviado", has_error: false });
             } catch (error) {
-                console.log(error);
                 return res.status(400).json({ data: error, has_error: true });
             }
         } else {

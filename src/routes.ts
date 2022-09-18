@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createCompany, loginCompany } from "./controllers/company";
+import { createProduct } from "./controllers/product";
 import {
     createUser,
     loginUser,
@@ -18,5 +19,8 @@ router.put("/user/updatePasswor", updatePasswordUser);
 //Company
 router.post("/company/signup", createCompany);
 router.post("/company/login", loginCompany);
+
+//Product
+router.post("/product/create", createProduct);
 
 export { router };

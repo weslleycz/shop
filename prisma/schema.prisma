@@ -43,7 +43,7 @@ model Product {
     name        String
     quantity    Int
     price       Float
-    discount    Int
+    discount    Float?
     description String
     type        String
     code_bar    String?
