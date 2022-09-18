@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createCompany, loginCompany } from "./controllers/company";
-import { createProduct } from "./controllers/product";
+import { createProduct, listProduct } from "./controllers/product";
 import {
     createUser,
     loginUser,
@@ -22,5 +22,6 @@ router.post("/company/login", loginCompany);
 
 //Product
 router.post("/product/create", createProduct);
+router.get("/product/list", listProduct);
 
 export { router };
