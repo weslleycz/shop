@@ -36,7 +36,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/recovery", (req, res, next) => {
-    const data: PropsRecovery = { title: "About" };
+    const data: PropsRecovery = { title: "Redefinir senha" };
     res.render("recovery", data);
 });
 
