@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createCompany, loginCompany } from "./controllers/company";
-import { createProduct, listProduct } from "./controllers/product";
+import { createProduct, listProduct,deleteProduct } from "./controllers/product";
 import {
     createUser,
     loginUser,
@@ -23,5 +23,7 @@ router.post("/company/login", loginCompany);
 //Product
 router.post("/product/create", createProduct);
 router.get("/product/list", listProduct);
+router.delete("/product/delete/:id",deleteProduct);
+
 
 export { router };

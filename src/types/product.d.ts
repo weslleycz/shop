@@ -1,9 +1,10 @@
-export type Product={
-    name : string,
-    quantity: number,
-    price: number,
-    discount: number?,
-    description: string,
-    type: string,
-    code_bar: string?
-}
+export type Product = {
+    name: string;
+    quantity: number;
+    price: number;
+    discount: number?;
+    description: string;
+    type: string;
+    code_bar: string?;
+    url: string?;
+};

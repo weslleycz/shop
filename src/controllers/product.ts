@@ -10,7 +10,7 @@ const createProduct = async (req: Request, res: Response) => {
     console.log(bgCyan(req.method));
     const token = req.headers.authorization;
     try {
-        const { code_bar, description, discount, name, price, quantity, type } =
+        const { code_bar, description, discount, name, price, quantity, type,url } =
             <Product>req.body;
         const id = validatorJWT(token);
         try {
@@ -24,6 +24,7 @@ const createProduct = async (req: Request, res: Response) => {
                     code_bar,
                     discount,
                     cooperativeId: id,
+                    url
                 },
             });
             return res.status(200).json({ status: "create", has_error: false });
@@ -48,4 +49,20 @@ const listProduct = async (req: Request, res: Response) => {
     }   
 }
 
-export { createProduct, listProduct };
+const deleteProduct = async (req: Request, res: Response) => {
+    console.log(bgRed(req.method));
+    const id = req.params.id
+    try {
+        validatorJWT(req.headers.authorization);
+        await prismaClient.product.delete({
+            where:{
+             id:id  
+            }
+        });
+        return res.status(200).json({ status: "delete", has_error: false });
+    } catch (error) {
+        return res.status(400).json({ data: error, has_error: true });  
+    }  
+}
+
+export { createProduct, listProduct,deleteProduct };
