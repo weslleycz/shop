@@ -67,6 +67,7 @@ const listProduct = async (req: Request, res: Response) => {
         const data = await prismaClient.product.findMany();
         return res.status(200).json({ data: data, has_error: false });
     } catch (error) {
+        console.log(123);
         return res.status(400).json({ data: error, has_error: true });
     }
 };
@@ -149,9 +150,24 @@ const searchProduct = async (req: Request, res: Response) => {
         });
         return res.status(200).json({ data: data, has_error: false });
     } catch (error) {
-        return res.status(500).json({ status: "error", has_error: true });
+        return res.status(400).json({ status: "error", has_error: true });
     }
 };
+
+const getProductCategorie = async (req: Request, res: Response) => {
+    console.log(bgMagenta(req.method));
+    try {
+        const categorie = req.params.categorie;
+        const data = await prismaClient.product.findMany({
+            where:{
+                type:categorie
+            }
+        });
+        return res.status(200).json({ data: data, has_error: false });
+    } catch (error) {
+        return res.status(400).json({ status: "error", has_error: true });
+    }
+}
 
 export {
     createProduct,
@@ -159,5 +175,6 @@ export {
     deleteProduct,
     updateProduct,
     selectProduct,
-    searchProduct
+    searchProduct,
+    getProductCategorie
 };

@@ -2,11 +2,12 @@ import { Router } from "express";
 import { createCompany, loginCompany } from "./controllers/company";
 import {
     createProduct,
-    listProduct,
     deleteProduct,
-    updateProduct,
+    getProductCategorie,
+    listProduct,
+    searchProduct,
     selectProduct,
-    searchProduct
+    updateProduct,
 } from "./controllers/product";
 import {
     createUser,
@@ -31,9 +32,9 @@ router.post("/company/login", loginCompany);
 router.post("/product/create", createProduct);
 router.get("/product/list", listProduct);
 router.delete("/product/delete/:id", deleteProduct);
-router.put("/product/update/:id",updateProduct);
+router.put("/product/update/:id", updateProduct);
 router.get("/product/select/:id", selectProduct);
 router.get("/product/search/:name", searchProduct);
-
+router.get("/product/:categorie", getProductCategorie);
 
 export { router };
